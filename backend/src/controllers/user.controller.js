@@ -34,13 +34,9 @@ export const registerController = asyncHandler(async (req, res) => {
   compareFieldValidation(password, password2, "Passwords do not match");
 
   // * Check if the user exists
-  const existingUser = await User.findOne({
-    $or: [{ email }, { phone }],
-  });
+  const existingUser = await User.findOne({ email });
   if (existingUser) {
-    return res
-      .status(400)
-      .json(new ApiResponse(400, null, "User already exists"));
+    throw new ApiError(400, "User with this email already exists");
   }
 
   // * Create a new User
@@ -54,11 +50,7 @@ export const registerController = asyncHandler(async (req, res) => {
   const user = await User.findById(createdUser._id).select(
     "-password -refreshToken"
   );
-  if (!user) {
-    return res
-      .status(400)
-      .json(new ApiResponse(400, null, "Error creating user"));
-  }
+  if (!user) throw new ApiError(400, "Error creating user");
 
   // * Generate Access and Refresh Token
   const { accessToken, refreshToken } = await generateAccessRefreshToken(
@@ -71,4 +63,54 @@ export const registerController = asyncHandler(async (req, res) => {
     .cookie("accessToken", accessToken, options)
     .cookie("refreshToken", refreshToken, options)
     .json(new ApiResponse(201, user, "User created successfully!"));
+});
+
+// Login Controller
+export const loginController = asyncHandler(async (req, res) => {
+  /**
+   * TODO: Get data from frontend
+   * TODO: Validate data
+   * TODO: Check if user exists
+   * TODO: Check if password is correct
+   * TODO: Generate token
+   * TODO: Sending Response
+   * **/
+
+  // * Get data from frontend
+  const { email, password } = req.body;
+
+  // * Validate data
+  notEmptyValidation([email, password]);
+  emailValidation(email);
+  minLengthValidation(password, 6, "Password");
+
+  // * Check if user exists
+  const user = await User.findOne({ email });
+  if (!user) throw new ApiError(400, "User with this email does not exist");
+
+  // * Check if password is correct
+  const isMatch = await user.isPasswordCorrect(password);
+  if (!isMatch) throw new ApiError(400, "Invalid credentials");
+
+  // * Generate Access and Refresh Token
+  const { accessToken, refreshToken } = await generateAccessRefreshToken(
+    user._id
+  );
+
+  const loggedInUser = await User.findById(user._id).select(
+    "-password -refreshToken"
+  );
+
+  // * Sending Response
+  return res
+    .status(200)
+    .cookie("accessToken", accessToken, options)
+    .cookie("refreshToken", refreshToken, options)
+    .json(
+      new ApiResponse(
+        200,
+        { user: loggedInUser, accessToken, refreshToken },
+        "User logged in successfully!"
+      )
+    );
 });
