@@ -31,3 +31,9 @@ http://localhost:8000
 - **URL:** `http://localhost:8000/api/user/logout`
 - **Method:** POST
 - **Description:** Logs out an authenticated user.
+
+#### Refresh Access Token
+
+- **URL:** `http://localhost:8000/api/user/refresh-access-token`
+- **Method:** POST
+- **Description:** Generates a new access token using a valid refresh token.
