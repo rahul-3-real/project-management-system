@@ -1,5 +1,6 @@
 import { Router } from "express";
 import {
+  getUserProfileController,
   loginController,
   logoutController,
   refreshAccessTokenController,
@@ -15,6 +16,7 @@ router.route("/register").post(registerController);
 router.route("/login").post(loginController);
 router.route("/logout").post(isAuthenticated, logoutController);
 
+router.route("/profile").get(isAuthenticated, getUserProfileController);
 router.route("/refresh-access-token").post(refreshAccessTokenController);
 
 export default router;

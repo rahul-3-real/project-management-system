@@ -37,3 +37,9 @@ http://localhost:8000
 - **URL:** `http://localhost:8000/api/user/refresh-access-token`
 - **Method:** POST
 - **Description:** Generates a new access token using a valid refresh token.
+
+#### Get User Profile
+
+- **URL:** `http://localhost:8000/api/user/profile`
+- **Method:** GET
+- **Description:** Retrieves the profile information of the authenticated user.

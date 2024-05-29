@@ -143,7 +143,6 @@ export const logoutController = asyncHandler(async (req, res) => {
 });
 
 // Refresh Access Token Controller
-
 export const refreshAccessTokenController = asyncHandler(async (req, res) => {
   /**
    * TODO: Get Refresh token from cookie
@@ -199,4 +198,23 @@ export const refreshAccessTokenController = asyncHandler(async (req, res) => {
   } catch (error) {
     throw new ApiError(400, error.message || "Invalid refresh token");
   }
+});
+
+// Get User Profile Controller
+export const getUserProfileController = asyncHandler(async (req, res) => {
+  /**
+   * TODO: Get user from request
+   * TODO: Sending Response
+   * **/
+
+  // * Get User from request
+  const reqUser = await req.user;
+  const user = await User.findById(reqUser._id).select(
+    "-password -refreshToken"
+  );
+
+  // * Sending Response
+  return res
+    .status(200)
+    .json(new ApiResponse(200, user, "User profile fetched successfully!"));
 });
