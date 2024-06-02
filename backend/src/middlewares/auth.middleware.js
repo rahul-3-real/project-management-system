@@ -30,3 +30,21 @@ export const isAuthenticated = asyncHandler(async (req, res, next) => {
     throw new ApiError(401, error?.message || "Invalid access token");
   }
 });
+
+// Verify that the user is Admin
+export const isAdmin = asyncHandler(async (req, res, next) => {
+  try {
+    const reqUser = await User.findById(req.user._id).populate("role");
+    if (!reqUser) {
+      throw new ApiError(401, "Invalid access token");
+    }
+
+    if (reqUser.role?.title !== "Admin") {
+      throw new ApiError(401, "You are not an admin");
+    }
+
+    next();
+  } catch (error) {
+    next(new ApiError(401, error?.message || "Invalid access token"));
+  }
+});

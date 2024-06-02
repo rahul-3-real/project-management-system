@@ -43,3 +43,35 @@ http://localhost:8000
 - **URL:** `http://localhost:8000/api/user/profile`
 - **Method:** GET
 - **Description:** Retrieves the profile information of the authenticated user.
+
+### Role
+
+#### Create
+
+- **URL:** `http://localhost:8000/api/role`
+- **Method:** POST
+- **Description:** Allows the creation of a new role. Only users with the admin role can create roles.
+
+#### Get List
+
+- **URL:** `http://localhost:8000/api/role`
+- **Method:** GET
+- **Description:** Retrieves a list of all roles.
+
+#### Get Detail
+
+- **URL:** `http://localhost:8000/api/role/:id`
+- **Method:** GET
+- **Description:** Retrieves the details of a specific role by its ID.
+
+#### Update
+
+- **URL:** `http://localhost:8000/api/role/:id`
+- **Method:** PATCH
+- **Description:** Allows updating of role details. Only users with the admin role can update roles.
+
+#### Delete
+
+- **URL:** `http://localhost:8000/api/role/:id`
+- **Method:** DELETE
+- **Description:** Allows deleting of role. Only users with the admin role can delete roles.
