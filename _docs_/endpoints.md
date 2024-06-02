@@ -107,3 +107,35 @@ http://localhost:8000
 - **URL:** `http://localhost:8000/api/department/:id`
 - **Method:** DELETE
 - **Description:** Allows deleting of department. Only users with the admin role can delete department.
+
+### Status
+
+#### Create
+
+- **URL:** `http://localhost:8000/api/status`
+- **Method:** POST
+- **Description:** Allows the creation of a new status. Only users with the admin role can create status.
+
+#### Get List
+
+- **URL:** `http://localhost:8000/api/status`
+- **Method:** GET
+- **Description:** Retrieves a list of all status.
+
+#### Get Detail
+
+- **URL:** `http://localhost:8000/api/status/:id`
+- **Method:** GET
+- **Description:** Retrieves the details of a specific status by its ID.
+
+#### Update
+
+- **URL:** `http://localhost:8000/api/status/:id`
+- **Method:** PATCH
+- **Description:** Allows updating of status details. Only users with the admin role can update status.
+
+#### Delete
+
+- **URL:** `http://localhost:8000/api/status/:id`
+- **Method:** DELETE
+- **Description:** Allows deleting of status. Only users with the admin role can delete status.
