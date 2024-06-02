@@ -75,3 +75,35 @@ http://localhost:8000
 - **URL:** `http://localhost:8000/api/role/:id`
 - **Method:** DELETE
 - **Description:** Allows deleting of role. Only users with the admin role can delete roles.
+
+### Department
+
+#### Create
+
+- **URL:** `http://localhost:8000/api/department`
+- **Method:** POST
+- **Description:** Allows the creation of a new department. Only users with the admin role can create department.
+
+#### Get List
+
+- **URL:** `http://localhost:8000/api/department`
+- **Method:** GET
+- **Description:** Retrieves a list of all departments.
+
+#### Get Detail
+
+- **URL:** `http://localhost:8000/api/department/:id`
+- **Method:** GET
+- **Description:** Retrieves the details of a specific department by its ID.
+
+#### Update
+
+- **URL:** `http://localhost:8000/api/department/:id`
+- **Method:** PATCH
+- **Description:** Allows updating of department details. Only users with the admin role can update department.
+
+#### Delete
+
+- **URL:** `http://localhost:8000/api/department/:id`
+- **Method:** DELETE
+- **Description:** Allows deleting of department. Only users with the admin role can delete department.

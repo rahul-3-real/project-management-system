@@ -4,6 +4,7 @@ import cors from "cors";
 
 import userRoutes from "../routes/user.route.js";
 import roleRoutes from "../routes/role.route.js";
+import departmentRoutes from "../routes/department.route.js";
 
 // App Configuration
 const app = express();
@@ -18,6 +19,7 @@ app.use(express.static("public"));
 // Routes
 app.use("/api/user", userRoutes);
 app.use("/api/role", roleRoutes);
+app.use("/api/department", departmentRoutes);
 
 // ! Error Handling Middleware
 app.use((err, req, res, next) => {

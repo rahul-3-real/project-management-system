@@ -1,5 +1,3 @@
-import jwt from "jsonwebtoken";
-
 import Role from "../models/role.model.js";
 import asyncHandler from "../utils/asyncHandler.js";
 import ApiResponse from "../utils/apiResponse.js";
