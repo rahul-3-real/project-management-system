@@ -20,6 +20,12 @@ http://localhost:8000
 - **Method:** POST
 - **Description:** Registers a new user.
 
+#### Create User
+
+- **URL:** `http://localhost:8000/api/user/create`
+- **Method:** POST
+- **Description:** Creation of a new User, Only users with the admin role can create new users.
+
 #### Login
 
 - **URL:** `http://localhost:8000/api/user/login`
