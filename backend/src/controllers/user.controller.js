@@ -12,6 +12,7 @@ import {
   compareFieldValidation,
 } from "../utils/validators.js";
 import { options, generateAccessRefreshToken } from "../utils/generateToken.js";
+import { sendWelcomeEmail } from "../configs/email.config.js";
 
 // Register Controller
 export const registerController = asyncHandler(async (req, res) => {
@@ -64,6 +65,57 @@ export const registerController = asyncHandler(async (req, res) => {
     .status(201)
     .cookie("accessToken", accessToken, options)
     .cookie("refreshToken", refreshToken, options)
+    .json(new ApiResponse(201, user, "User created successfully!"));
+});
+
+// Create User Controller
+export const createUserController = asyncHandler(async (req, res) => {
+  /**
+   * TODO: Get data from request
+   * TODO: validate data
+   * TODO: Check if user exists
+   * TODO: Create new user
+   * TODO: Check if user is created
+   * TODO: Send Email
+   * TODO: Sending Response
+   * **/
+
+  // * Get data from request
+  const { email, phone, role, department, status } = req.body;
+
+  // * validate data
+  notEmptyValidation([email, phone, role, department, status]);
+  emailValidation(email);
+  phoneValidation(phone);
+
+  // * Check if user exists
+  const existingUser = await User.findOne({ email });
+  if (existingUser) {
+    throw new ApiError(400, "User with this email already exists");
+  }
+
+  // * Create new user
+  const createdUser = await User.create({
+    email,
+    phone,
+    role,
+    department,
+    status,
+    password: process.env.DEFAULT_USER_PASSWORD,
+  });
+
+  // * Check if user is created successfully
+  const user = await User.findById(createdUser._id).select(
+    "-password -refreshToken"
+  );
+  if (!user) throw new ApiError(400, "Error creating user");
+
+  // * Sending Email
+  sendWelcomeEmail(user.email);
+
+  // * Sending Response
+  return res
+    .status(201)
     .json(new ApiResponse(201, user, "User created successfully!"));
 });
 

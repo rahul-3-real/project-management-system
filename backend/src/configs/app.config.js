@@ -17,6 +17,10 @@ app.use(express.urlencoded({ extended: true, limit: "16kb" }));
 app.use(cookieParser());
 app.use(express.static("public"));
 
+// Setup Template Engine
+app.set("view engine", "ejs");
+app.set("views", "./src/templates");
+
 // Routes
 app.use("/api/user", userRoutes);
 app.use("/api/role", roleRoutes);
