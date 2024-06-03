@@ -35,7 +35,7 @@ export const minLengthValidation = (input, length, fieldName = "Input") => {
   if (input.length <= length) {
     throw new ApiError(
       400,
-      `${fieldName} length must be minimum ${length} characters`
+      `${fieldName} length must be minimum ${length + 1} characters`
     );
   }
   return length;

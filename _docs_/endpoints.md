@@ -50,6 +50,12 @@ http://localhost:8000
 - **Method:** GET
 - **Description:** Retrieves the profile information of the authenticated user.
 
+#### Reset Password
+
+- **URL:** `http://localhost:8000/api/user/reset-password`
+- **Method:** PATCH
+- **Description:** Reset the user's password.
+
 ### Role
 
 #### Create

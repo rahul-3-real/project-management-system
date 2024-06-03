@@ -6,8 +6,13 @@ import {
   logoutController,
   refreshAccessTokenController,
   registerController,
+  resetPasswordController,
 } from "../controllers/user.controller.js";
-import { isAuthenticated, isAdmin } from "../middlewares/auth.middleware.js";
+import {
+  isAuthenticated,
+  isAdmin,
+  isAuthorized,
+} from "../middlewares/auth.middleware.js";
 
 // Router
 const router = new Router();
@@ -21,5 +26,7 @@ router.route("/logout").post(isAuthenticated, logoutController);
 
 router.route("/profile").get(isAuthenticated, getUserProfileController);
 router.route("/refresh-access-token").post(refreshAccessTokenController);
+
+router.route("/reset-password").patch(isAuthenticated, resetPasswordController);
 
 export default router;

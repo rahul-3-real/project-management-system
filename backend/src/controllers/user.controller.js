@@ -33,7 +33,7 @@ export const registerController = asyncHandler(async (req, res) => {
   notEmptyValidation([email, phone, password, password2]);
   emailValidation(email);
   phoneValidation(phone);
-  minLengthValidation(password, 6, "Password");
+  minLengthValidation(password, 5, "Password");
   compareFieldValidation(password, password2, "Passwords do not match");
 
   // * Check if the user exists
@@ -136,7 +136,7 @@ export const loginController = asyncHandler(async (req, res) => {
   // * Validate data
   notEmptyValidation([email, password]);
   emailValidation(email);
-  minLengthValidation(password, 6, "Password");
+  minLengthValidation(password, 5, "Password");
 
   // * Check if user exists
   const user = await User.findOne({ email });
@@ -269,4 +269,42 @@ export const getUserProfileController = asyncHandler(async (req, res) => {
   return res
     .status(200)
     .json(new ApiResponse(200, user, "User profile fetched successfully!"));
+});
+
+// Rest Password Controller
+export const resetPasswordController = asyncHandler(async (req, res) => {
+  /**
+   * TODO: Get data from request
+   * TODO: Validate data
+   * TODO: Check if new password is not same as old password
+   * TODO: Update password
+   * TODO: Sending Response
+   * **/
+
+  // * Get data from request
+  const { oldPassword, newPassword, newPassword2 } = req.body;
+
+  // * Validate data
+  notEmptyValidation([oldPassword, newPassword, newPassword2]);
+  minLengthValidation(newPassword, 5, "Password");
+  compareFieldValidation(newPassword, newPassword2, "Passwords do not match");
+
+  // * Validate old password
+  const user = await User.findById(req.user._id);
+  const isMatch = await user.isPasswordCorrect(oldPassword);
+  if (!isMatch) throw new ApiError(400, "Old passwoord is incorrect");
+
+  // * Check if new password is not same as old password
+  if (oldPassword === newPassword) {
+    throw new ApiError(400, "New password cannot be same as old password");
+  }
+
+  // * Update password
+  user.password = newPassword;
+  const updatedUser = await user.save();
+
+  // * Sending Response
+  return res
+    .status(200)
+    .json(new ApiResponse(200, updatedUser, "Password updated successfully!"));
 });
